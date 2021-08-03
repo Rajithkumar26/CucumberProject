@@ -5,6 +5,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -14,10 +15,14 @@ import junit.framework.Assert;
 public class LoginStepDefinition {
 
 WebDriver driver;
+
 @Given("^User is already on login page$")
 public void user_is_already_on_login_page() throws Throwable {
-	 System.setProperty("webdriver.chrome.driver","C:\\Users\\Vaibhav\\Downloads\\chromedriver.exe");
+System.setProperty("webdriver.chrome.driver","C:\\Users\\Vaibhav\\Downloads\\chromedriver.exe");
 	 driver = new ChromeDriver();
+driver.manage().deleteAllCookies();
+	 driver.manage().window().maximize();
+	 
 	 driver.get("https://ui.cogmento.com/");
 }
 
@@ -48,5 +53,27 @@ public void user_is_on_home_page() throws Throwable {
 	 System.out.println("Home Page title ::"+ title);
 	 Assert.assertEquals("Cogmento CRM", title);
 }
-	
+
+@Then("^user enters contacts page$")
+public void user_enters_contacts_page() throws Throwable {
+	Thread.sleep(5000);	
+    driver.findElement(By.xpath("//*[@id=\'main-nav\']/div[3]/a")).click();
+    
+}
+
+@Then("^User can creates contacts \"([^\"]*)\" and \"([^\"]*)\"$")
+public void user_can_creates_contacts_and(String Firstname, String Lastname) throws Throwable {
+   driver.findElement(By.xpath("//*[@id=\'dashboard-toolbar\']/div[2]/div/a")).click();
+   driver.findElement(By.xpath("//*[@id=\'main-content\']/div/div[2]/form/div[1]/div[1]/div/div/input")).sendKeys(Firstname);
+driver.findElement(By.xpath("//*[@id=\'main-content\']/div/div[2]/form/div[1]/div[2]/div/div/input")).sendKeys(Lastname);
+driver.findElement(By.xpath("//*[@id=\'dashboard-toolbar\']/div[2]/div/button[2]")).click();
+}
+
+
+@Then("^Close the Browser$")
+public void close_the_Browser() throws Throwable {
+	Thread.sleep(2000);
+	driver.close();
+}
+
 }

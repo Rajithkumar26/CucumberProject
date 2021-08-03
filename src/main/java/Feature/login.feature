@@ -5,7 +5,8 @@ Scenario Outline: Free CRM Login Feature Test
 	Then user enters "<username>" and "<password>" 
 	Then user clicks on login button 
 	Then user is on home page 
-	
+	Then Close the Browser
 	Examples: 
 		|username | password|
 		|nerella.rajith97@gmail.com|Test@123|
+		
